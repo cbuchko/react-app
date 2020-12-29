@@ -1,32 +1,14 @@
 import * as React from 'react';
 import { Component } from 'react';
 
+type MyProps = {
+    userId: number,
+    id: number,
+    title: string,
+    completed: boolean
+}
 
-class Post extends Component {
-
-    state = {
-        userData: {
-            userID: 0,
-            id: 0,
-            title: "None",
-            completed: false
-
-        }
-    };
-
-    componentDidMount(){
-        const min = 1;
-        const max = 100;
-        const rand = Math.floor(min + Math.random() * (max - min));
-
-        fetch('https://jsonplaceholder.typicode.com/posts/' + rand)
-        .then(response => response.json())
-        .then(json => {
-            let userData = {...this.state.userData, userID: json.userId, id: json.id, title: json.title, completed: json.completed}
-            this.setState({userData})
-        });
-      
-    }
+class Post extends Component<MyProps, {}> {
 
     render(){
 
@@ -35,14 +17,13 @@ class Post extends Component {
                 <div className="row px-0">
                     <div className="col">
                         <h1 className="display-5">Post</h1>
-                        <figcaption className="blockquote-footer m-2 fs-5">by {this.state.userData.userID}</figcaption>
+                        <figcaption className="blockquote-footer m-2 fs-5">by {this.props.userId}</figcaption>
                     </div>
                     <div className="col-2">
-                        <p>ID: {this.state.userData.id}</p>
-                        
+                        <p>ID: {this.props.id}</p>                      
                     </div>
                 </div>
-                <p>{this.state.userData.title}</p>
+                <p>{this.props.title}</p>
             </div>
         );
     }
