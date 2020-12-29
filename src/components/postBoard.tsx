@@ -25,15 +25,11 @@ class PostBoard extends Component<{}, IState>{
         }]
     };
 
-    componentDidMount(){
+    async componentDidMount(){
      
-        fetch('https://jsonplaceholder.typicode.com/posts')
-        .then(response => response.json())
-        .then(json => {
-            let userPosts = json;
-            this.setState({userPosts});
-        });
-      
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const json = await response.json();
+        this.setState({ userPosts: json});
     }
 
     render(){
@@ -42,6 +38,7 @@ class PostBoard extends Component<{}, IState>{
             <React.StrictMode>
                 {this.state.userPosts.map(post => (
                     <Post 
+                        key={post.id}
                         userId={post.userId} 
                         id={post.id} 
                         title={post.title} 
