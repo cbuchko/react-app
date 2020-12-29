@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Component } from 'react';
 
-type MyProps = {
+type IProps = {
     userId: number,
     id: number,
     title: string,
     completed: boolean
 }
 
-class Post extends Component<MyProps, {}> {
+class Post extends Component<IProps, {}> {
 
     render(){
 
