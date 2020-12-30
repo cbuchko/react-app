@@ -11,7 +11,8 @@ type IProps = {
 function Post(props: IProps){
 
    return(
-        <div className="container-sm border-bottom border-primary px-0 w-50 p-2">
+
+        <div className="border-bottom border-primary p-2">
             <div className="row px-0">
                 <div className="col">
                     <h1 className="display-5">Post</h1>
@@ -23,8 +24,8 @@ function Post(props: IProps){
             </div>
             <p>{props.title}</p>
         </div>
-    );
-    
+
+    );   
 }
 
 export default Post;

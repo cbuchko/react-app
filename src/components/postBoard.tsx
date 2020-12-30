@@ -1,4 +1,3 @@
-import { ReactComponent } from '*.svg';
 import * as React from 'react';
 import { Component } from 'react';
 import Post from './post';
@@ -39,7 +38,10 @@ class PostBoard extends Component<{}, IState>{
 
         let userPosts = shuffle(postsJson).slice(0,this.state.boardLength)
 
-        
+        /*
+        * Compare user ids from posts and users to correctly identified what user
+        * authored each post.
+        */
         for(var i = 0; i < userPosts.length; i++){
             for(var j = 0; j < usersJson.length; j++){
                 if(userPosts[i].userId === usersJson[j].id){
@@ -54,7 +56,7 @@ class PostBoard extends Component<{}, IState>{
     render(){
 
         return(
-            <React.StrictMode>
+            <div className="container-sm px-0 w-50 p-2">
                 {this.state.userPosts.map(post => (
                     <Post 
                         key={post.id}
@@ -64,7 +66,7 @@ class PostBoard extends Component<{}, IState>{
                         completed={post.completed}
                     />
                 ))}
-            </React.StrictMode>
+            </div>
         );
     }
 
