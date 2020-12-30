@@ -29,7 +29,7 @@ class PostBoard extends Component<{}, IState>{
      
         const response = await fetch('https://jsonplaceholder.typicode.com/posts');
         const json = await response.json();
-        this.setState({ userPosts: json});
+        this.setState({userPosts: shuffle(json).slice(0,4)});
     }
 
     render(){
@@ -49,6 +49,25 @@ class PostBoard extends Component<{}, IState>{
         );
     }
 
+}
+
+function shuffle(array: PostObject[]) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
 }
 
 export default PostBoard;
