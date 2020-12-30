@@ -7,11 +7,13 @@ interface PostObject {
     userId: number,
     id: number,
     title: string,
+    userName: string,
     completed: boolean
 }
 
 interface IState {
-    userPosts: PostObject[]
+    userPosts: PostObject[],
+    boardLength: number
 }
 
 class PostBoard extends Component<{}, IState>{
@@ -21,15 +23,32 @@ class PostBoard extends Component<{}, IState>{
             userId: 0,
             id: 0,
             title: "None",
+            userName: "None",
             completed: false
-        }]
+        }],
+        boardLength: 4
     };
 
     async componentDidMount(){
      
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-        const json = await response.json();
-        this.setState({userPosts: shuffle(json).slice(0,4)});
+        const postsResponse = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const postsJson = await postsResponse.json();
+
+        const usersResponse = await fetch('https://jsonplaceholder.typicode.com/users');
+        const usersJson = await usersResponse.json();
+
+        let userPosts = shuffle(postsJson).slice(0,this.state.boardLength)
+
+        
+        for(var i = 0; i < userPosts.length; i++){
+            for(var j = 0; j < usersJson.length; j++){
+                if(userPosts[i].userId === usersJson[j].id){
+                    userPosts[i].userName = usersJson[j].name;
+                }
+            }
+        }
+        
+        this.setState({userPosts});
     }
 
     render(){
@@ -39,7 +58,7 @@ class PostBoard extends Component<{}, IState>{
                 {this.state.userPosts.map(post => (
                     <Post 
                         key={post.id}
-                        userId={post.userId} 
+                        userName={post.userName} 
                         id={post.id} 
                         title={post.title} 
                         completed={post.completed}
