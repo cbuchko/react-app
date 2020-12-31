@@ -28,8 +28,12 @@ class PostBoard extends Component<{}, IState>{
         boardLength: 4
     };
 
-    async componentDidMount(){
-     
+    componentDidMount(){
+        this.refreshPosts();
+    }
+
+    async refreshPosts(){
+        console.log("hello world")
         const postsResponse = await fetch('https://jsonplaceholder.typicode.com/posts');
         const postsJson = await postsResponse.json();
 
@@ -66,6 +70,7 @@ class PostBoard extends Component<{}, IState>{
                         completed={post.completed}
                     />
                 ))}
+                <button className="btn btn-primary m-2" onClick={() => this.refreshPosts()}>Refresh</button>
             </div>
         );
     }
