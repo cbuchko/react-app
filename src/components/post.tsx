@@ -52,6 +52,7 @@ class Post extends Component<IProps,IState> {
                 {this.state.postComments.map(comment => (
                     <Comment
                         body={comment.body}
+                        email={comment.email}
                     />
                 ))}
             </div>
