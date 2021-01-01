@@ -15,6 +15,11 @@ interface IState {
     boardLength: number
 }
 
+const mystyles: React.CSSProperties = {
+    position: 'sticky',
+    top: '20px',
+}
+
 class PostBoard extends Component<{}, IState>{
 
     state = {
@@ -58,17 +63,23 @@ class PostBoard extends Component<{}, IState>{
     render(){
 
         return(
-            <div className="container-sm px-0 w-50 p-2">
-                {this.state.userPosts.map(post => (
-                    <Post 
-                        key={post.id}
-                        userName={post.userName} 
-                        id={post.id} 
-                        title={post.title} 
-                        completed={post.completed}
-                    />
-                ))}
-                <button className="btn btn-primary m-2" onClick={() => this.refreshPosts()}>Refresh</button>
+             <div className="container-sm px-0 w-50 p-2">
+                 <div className="row">
+                    <div className="col">
+                        {this.state.userPosts.map(post => (
+                            <Post 
+                                key={post.id}
+                                userName={post.userName} 
+                                id={post.id} 
+                                title={post.title} 
+                                completed={post.completed}
+                            />
+                        ))}
+                    </div>
+                    <div className="col-1">
+                        <button className="btn btn-primary m-2" onClick={() => this.refreshPosts()} style={mystyles}>Refresh</button>
+                    </div>
+                </div>
             </div>
         );
     }
