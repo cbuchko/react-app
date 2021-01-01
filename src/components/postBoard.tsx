@@ -33,7 +33,6 @@ class PostBoard extends Component<{}, IState>{
     }
 
     async refreshPosts(){
-        console.log("hello world")
         const postsResponse = await fetch('https://jsonplaceholder.typicode.com/posts');
         const postsJson = await postsResponse.json();
 
@@ -43,7 +42,7 @@ class PostBoard extends Component<{}, IState>{
         let userPosts = shuffle(postsJson).slice(0,this.state.boardLength)
 
         /*
-        * Compare user ids from posts and users to correctly identified what user
+        * Compare user ids from posts and users to correctly identify which users
         * authored each post.
         */
         for(var i = 0; i < userPosts.length; i++){
@@ -52,8 +51,7 @@ class PostBoard extends Component<{}, IState>{
                     userPosts[i].userName = usersJson[j].name;
                 }
             }
-        }
-        
+        }       
         this.setState({userPosts});
     }
 
@@ -77,6 +75,9 @@ class PostBoard extends Component<{}, IState>{
 
 }
 
+/*
+* Helper function that randomizes the order of elements in an array
+*/
 function shuffle(array: PostObject[]) {
     var currentIndex = array.length, temporaryValue, randomIndex;
   

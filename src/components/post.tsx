@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
+import PostContent from './postContent';
+import Comment from './comment';
 
 type IProps = {   
     id: number,
@@ -8,24 +10,54 @@ type IProps = {
     completed: boolean
 }
 
-function Post(props: IProps){
+interface CommentObject {
+    postId: number,
+    id: number,
+    name: string,
+    email: string,
+    body: string
+}
 
-   return(
+interface IState {
+    postComments: CommentObject[]
+}
 
-        <div className="border-bottom border-primary p-2">
-            <div className="row px-0">
-                <div className="col">
-                    <h1 className="display-5">Post</h1>
-                    <figcaption className="blockquote-footer m-2 fs-5">by {props.userName}</figcaption>
-                </div>
-                <div className="col-2">
-                    <p>ID: {props.id}</p>                      
-                </div>
+class Post extends Component<IProps,IState> {
+
+    state = {
+        postComments: [{
+            postId: 0,
+            id: 0,
+            name: "None",
+            email: "None",
+            body: "None"
+        }]
+    }
+    async componentDidMount(){
+        const commentsResponse = await fetch('https://jsonplaceholder.typicode.com/comments?postId=' + this.props.id);
+        const postComments = await commentsResponse.json();
+
+        this.setState({postComments})
+    }
+
+    render(){
+        return(
+            <div className="border-bottom border-primary p-2">
+                <PostContent
+                    id={this.props.id}
+                    title={this.props.title}
+                    userName={this.props.userName}
+                    completed={this.props.completed}
+                />
+                {this.state.postComments.map(comment => (
+                    <Comment
+                        body={comment.body}
+                    />
+                ))}
             </div>
-            <p>{props.title}</p>
-        </div>
 
-    );   
+        );   
+    }
 }
 
 export default Post;
