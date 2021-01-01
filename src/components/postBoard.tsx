@@ -15,6 +15,11 @@ interface IState {
     boardLength: number
 }
 
+const mystyles: React.CSSProperties = {
+    position: 'sticky',
+    top: '20px',
+}
+
 class PostBoard extends Component<{}, IState>{
 
     state = {
@@ -33,7 +38,6 @@ class PostBoard extends Component<{}, IState>{
     }
 
     async refreshPosts(){
-        console.log("hello world")
         const postsResponse = await fetch('https://jsonplaceholder.typicode.com/posts');
         const postsJson = await postsResponse.json();
 
@@ -43,7 +47,7 @@ class PostBoard extends Component<{}, IState>{
         let userPosts = shuffle(postsJson).slice(0,this.state.boardLength)
 
         /*
-        * Compare user ids from posts and users to correctly identified what user
+        * Compare user ids from posts and users to correctly identify which users
         * authored each post.
         */
         for(var i = 0; i < userPosts.length; i++){
@@ -52,31 +56,39 @@ class PostBoard extends Component<{}, IState>{
                     userPosts[i].userName = usersJson[j].name;
                 }
             }
-        }
-        
+        }       
         this.setState({userPosts});
     }
 
     render(){
 
         return(
-            <div className="container-sm px-0 w-50 p-2">
-                {this.state.userPosts.map(post => (
-                    <Post 
-                        key={post.id}
-                        userName={post.userName} 
-                        id={post.id} 
-                        title={post.title} 
-                        completed={post.completed}
-                    />
-                ))}
-                <button className="btn btn-primary m-2" onClick={() => this.refreshPosts()}>Refresh</button>
+             <div className="container-sm px-0 w-50 p-2">
+                 <div className="row">
+                    <div className="col">
+                        {this.state.userPosts.map(post => (
+                            <Post 
+                                key={post.id}
+                                userName={post.userName} 
+                                id={post.id} 
+                                title={post.title} 
+                                completed={post.completed}
+                            />
+                        ))}
+                    </div>
+                    <div className="col-1">
+                        <button className="btn btn-primary m-2" onClick={() => this.refreshPosts()} style={mystyles}>Refresh</button>
+                    </div>
+                </div>
             </div>
         );
     }
 
 }
 
+/*
+* Helper function that randomizes the order of elements in an array
+*/
 function shuffle(array: PostObject[]) {
     var currentIndex = array.length, temporaryValue, randomIndex;
   
