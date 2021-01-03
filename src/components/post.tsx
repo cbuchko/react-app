@@ -74,7 +74,9 @@ class Post extends Component<IProps, IState> {
   * Flip whether the comments should be visible or not
   */
   private commentState = () => {
-    this.setState({ commentsVisible: !this.state.commentsVisible })
+    this.setState((prevState) => ({
+      commentsVisible: !prevState.commentsVisible
+    }))
   }
 }
 
