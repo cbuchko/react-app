@@ -45,8 +45,6 @@ class Post extends Component<IProps, IState> {
     this.setState({ postComments });
   }
 
-  displayComments() {}
-
   render() {
     return (
       <div className="border-bottom border-primary p-2">
@@ -57,9 +55,7 @@ class Post extends Component<IProps, IState> {
           completed={this.props.completed}
         />
         <button
-          onClick={() =>
-            this.setState({ commentsVisible: !this.state.commentsVisible })
-          }
+          onClick={this.commentState}
           type="button"
           className="btn btn-outline-secondary"
         >
@@ -72,6 +68,13 @@ class Post extends Component<IProps, IState> {
           ))}
       </div>
     );
+  }
+
+  /*
+  * Flip whether the comments should be visible or not
+  */
+  private commentState = () => {
+    this.setState({ commentsVisible: !this.state.commentsVisible })
   }
 }
 

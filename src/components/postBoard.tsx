@@ -38,7 +38,7 @@ class PostBoard extends Component<{}, IState> {
     this.refreshPosts();
   }
 
-  async refreshPosts() {
+  refreshPosts = async () => {
     const postsResponse = await fetch(
       "https://jsonplaceholder.typicode.com/posts"
     );
@@ -63,7 +63,7 @@ class PostBoard extends Component<{}, IState> {
       }
     }
     this.setState({ userPosts });
-  }
+  };
 
   render() {
     return (
@@ -83,7 +83,7 @@ class PostBoard extends Component<{}, IState> {
           <div className="col-1">
             <button
               className="btn btn-primary m-2"
-              onClick={() => this.refreshPosts()}
+              onClick={this.refreshPosts}
               style={mystyles}
             >
               Refresh
